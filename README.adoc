@@ -15,6 +15,10 @@ The portable CDI extension https://quarkus.io/blog/quarkus-dependency-injection/
 So in case you really want to have great Object Mapping but cannot decide to use Spring as a container, 
 you might want to try out the CDI extension.
 
+Neo4j-OGM can work on GraalVM native since version 3.2.19 when you provide an index of the node entities.
+The index must be in `META-INF/resources/name/of/your/package/neo4j-ogm.index`.
+Also the entities in question must be registered for reflection (either through pure GraalVM `reflection-config.json` or through the means of your selected framework.)
+
 The goal of this repository is to check and demonstrate what is necessary to achieve the following inside the current Java application frameworks and runtimes:
 
 * Support a couple of "standard" use cases presented as HTTP Api, transporting JSON. This is a hard requirement
@@ -228,7 +232,7 @@ Additional setup or Gradle is required.
 == Quarkus
 
 * ✅ Automatic setup of the Neo4j driver
-* ⚠️ Officially supported Data Mapping framework available (https://github.com/neo4j/neo4j-ogm[Neo4j-OGM] works in JVM and dev mode and can make use of the Neo4j extension, see `quarkus-ogm` example)
+* ✅ Officially supported Data Mapping framework available (https://github.com/neo4j/neo4j-ogm[Neo4j-OGM], JVM and dev modes work ootb, native mode needs an index, which is just an enumeration of the mapped entities.)
 * ✅ Built-in dev-mode with reload / restart feature
 * ✅ Dedicated support for optimized docker images
 * ✅ Reactive Streams: https://smallrye.io/smallrye-mutiny/[Smallrye Mutiny]
@@ -237,6 +241,7 @@ Additional setup or Gradle is required.
 Demo projects provided:
 
 * quarkus-imperative
+* quarkus-ogm (Take note of the entity index https://github.com/michael-simons/neo4j-from-the-jvm-ecosystem/tree/master/quarkus-ogm/src/main/resources/META-INF/resources/org/neo4j/examples/jvm/quarkus/ogm/movies/neo4j-ogm.index[here].)
 * quarkus-reactive
 
 Created via: https://code.quarkus.io, version tested: *1.9.2.Final*.
