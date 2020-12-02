@@ -19,9 +19,16 @@
 package org.neo4j.examples.jvm.spring.data.imperative.movies;
 
 import org.springframework.data.neo4j.repository.Neo4jRepository;
+import org.springframework.data.neo4j.repository.query.Query;
 
 /**
  * @author Michael J. Simons
  */
 interface MovieRepository extends Neo4jRepository<Movie, String> {
+
+    @Query("""
+        MATCH (m:Movie)<-[:ACTED_IN]-(actor:Person) where m.title = $title
+        return m, collect(actor.name) as actorNames
+    """)
+    MovieProjection findProjectedInfo(String title);
 }

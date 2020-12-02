@@ -23,6 +23,13 @@ class MovieRepositoryTest {
         assertThat(movie.getActors()).hasSize(5);
         
     }
+    
+    @Test
+	void findByProjectedInformation(@Autowired MovieRepository movieRepository) {
+		var movie = movieRepository.findProjectedInfo("The Matrix");
+        System.out.println(movie.getActorNames());
+        
+    }
 
     @DynamicPropertySource
 	static void neo4jProperties(DynamicPropertyRegistry registry) {
